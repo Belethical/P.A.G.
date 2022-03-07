@@ -1,6 +1,6 @@
 //Global Variables
 
-let gamestate = 3;
+let gamestate = 0;
 let template;
 var pag;
 let qButtons = [];
@@ -14,12 +14,17 @@ let spotifyCode;
 let randomString = [];
 let x;
 let choice;
+//var computerFont;
+
 var garfieldStrip;
 var garfieldSelector;
+
 var bgSelector;
 var bg;
+
 var qrCode;
 var qrSelector;
+
 var tarot;
 var tarotSelector;
 var tarotQR;
@@ -27,41 +32,34 @@ var tarotQR;
 let questionFinished = false;
 let artStart = false;
 
-
+let chosenColour = (58,137,134);
 
 
 
 function setup() {
-
   createCanvas(1000, 800);
-  pag = loadImage('Sprites/PAG.png'); //Loads PAGS sprite
-  textFont('Syne Mono'); // Sets the Font
+  pag = loadImage('Sprites/PAG.png');
+  textFont('Syne Mono');
 	 
-	// Setting up Colours	 
   let p = color(199,36, 177);
   let g = color(128, 0, 255);
   let b = color(0,255, 255);
   let r = color(0,26, 255);
   let green = color(0, 181, 26);
-  let orange = color(0,255,180);
 
-  // Creating Button Objects, passing in an X and Y location, as well as a Colour and Text
+
   beginButton = new qButton(550, 40, g, 'Click to Start!');
   finalButton = new qButton(550, 20, g, 'Load Poster');
   colourButton = new qButton(300, 240, green, 'Change Colours');
 
-  //Uses a function to setup my arrays
   loadArrays();
 
-  //Uses a unique random number generator function to get 3 random numbers to decide the questions
-  //The UniqueRandoms function was not wrote by me and I sourced it from Stack Overflow
   rQuestions = uniqueRandoms(3, 0, 11);
 
-  for (var i = 0; i <= 2; i++) { //Uses the random numbers to pick questions from the list and put it in the sQuestions variable	
+  for (var i = 0; i <= 2; i++) {	
   	sQuestions[i] = questionList[rQuestions[i]];
   }
 
-  //Creates question buttons
   qButtons[0] = new qButton(30,600, p, 'A');
   qButtons[1] = new qButton(30,700, g, 'C');
   qButtons[2] = new qButton(500,600, b, 'B');
@@ -71,23 +69,22 @@ function setup() {
 
 }
 
-function mousePressed(){ //This section of code is ran when the mouse is pressed
-	
-	if (gamestate == 0) { //If the game is at the intro screen, then it will call a function on the intro button
+function mousePressed(){
+	if (gamestate == 0) {
 		beginButton.specialClick();
 	}
 
-	for (var i = qButtons.length - 1; i >= 0; i--) { //This loop goes through all the question buttons and checks if they have been clicked
+	for (var i = qButtons.length - 1; i >= 0; i--) {
 		qButtons[i].clicked();
 		
 	}
 
-	if (qCounter == 4) { //This runs when the colour question is asked, and uses a function in the colourButton to randomise colours
+	if (qCounter == 4) {
 		colourButton.colourClick();
 	}
 
 	
-	if(gamestate == 2) { //This is run when the user is at the final screen before the poster to check if they have clicked the button
+	if(gamestate == 2) {
 		finalButton.finalClick();
 	}
 	
@@ -96,34 +93,34 @@ function mousePressed(){ //This section of code is ran when the mouse is pressed
 function draw() {
   
 
-if (gamestate == 0) { //gamestate 0 is the intro gamestate, this is where PAG introduces himself and a start button is displayed
-
+if (gamestate == 0) {
+	// Intro
 	background(0);
 	gamestate0();
 	
 	
 
-} else if (gamestate == 1) { //gamestate 1 is the Quiz gamestate, this is where the user is asked questions and their answers are recorded
-
+} else if (gamestate == 1) {
+	// Questions
 	background(0);
 	gamestate1();
 
 
 	
-} else if (gamestate == 2) { //gamestate 2 is the loading screen before the poster where P.A.G explains how to save the poster.
-	
+} else if (gamestate == 2) {
+	// Draw Mode
 	background(0);
 	gamestate2();
 
-} else if (gamestate == 3) { //gamestate 3 is where the poster is generated and displayed at an A4 size. It has to be displayed at this size so it can be downloaded at a high resolution
+} else if (gamestate == 3) {
 	gamestate3();
 } 
 
 }
 
-function gamestate0() { // INTRO
+function gamestate0() {
 	
-	//Displays flavour text up the top
+
 	fill(0, 181, 26);
 	textSize(20);
 	textAlign(LEFT);
@@ -133,7 +130,6 @@ function gamestate0() { // INTRO
 	text('INJECTING CREATIVITY...', 1, 110);
 	text('ADDING CHARM...', 1, 140);
 
-	//Displays the Exposition Text
 	fill(0, 181, 26);
 	textSize(23);
 	textAlign(LEFT);
@@ -147,173 +143,174 @@ function gamestate0() { // INTRO
 	text("Then i'll be ready to make you a personalised poster", 320, 700);
 	text("When you're ready click the button to start!", 320, 750);
 
-	//Displays PAGS sprite
+
+
 	image(pag, 10, 300);
 	pag.resize(300, 500);
 
-	//displays the start button
+	//rect(150, 600, 500, 100);
 	beginButton.display();
+
+
 }
 
-function gamestate1(){ //QUIZ
+function gamestate1(){
 
-	//displays PAGS sprite
 	image(pag, 10, 250);
 	pag.resize(200, 350);
-
-	//This loop goes through each button and displays them, on the first loop it sets the qCounter to 0;
 
 	for (var i = qButtons.length - 1; i >= 0; i--) {
 		qButtons[i].display();
 
+		//if a button has been clicked, update the buttons text
 		if (questionFinished = false) {
 			qCounter = 0;
 			questionFinished = true;			
 		}
 	}
 
-	if (qCounter == 0) { 	//Displays the first question
-		
-		//Displays Question
+	if (qCounter == 0) {
+		//question 1
+
 		fill(0, 181, 26);
 		textAlign(CENTER);
 		text(sQuestions[0][0], 500, 80);
 
-		//Displays Answers
+		
 		text(sQuestions[0][1], 500, 200);
 		text(sQuestions[0][2], 500, 300);
 		text(sQuestions[0][3], 500, 400);
 		text(sQuestions[0][4], 500, 500);
 		
 
-	} else if (qCounter == 1) { 	//Displays the second question
-		
-		//Displays Question
+	} else if (qCounter == 1) {
+		//question 2
+
 		fill(0, 181, 26);
 		textAlign(CENTER);
 		text(sQuestions[1][0], 500, 80);
 
-		//Displays Answers
 		fill(0, 181, 26);
 		text(sQuestions[1][1], 500, 200);
 		text(sQuestions[1][2], 500, 300);
 		text(sQuestions[1][3], 500, 400);
 		text(sQuestions[1][4], 500, 500);
 
-	} else if (qCounter == 2) { 	//Displays the third question
+	} else if (qCounter == 2) {
 
-		//Displays Question
+
 		fill(0, 181, 26);
 		textAlign(CENTER);
 		text(sQuestions[2][0], 500, 80);
 
-		//Displays Answers
 		fill(0, 181, 26);
 		text(sQuestions[2][1], 500, 200);
 		text(sQuestions[2][2], 500, 300);
 		text(sQuestions[2][3], 500, 400);
 		text(sQuestions[2][4], 500, 500);
 
+		console.log(template);
+		console.log(qCounter);
 
-	} else if (qCounter == 3) { //Displays the fourth question, this changes depends on the template chosen
+	} else if (qCounter == 3) {
+
+
+		console.log(template);
+		console.log(qCounter);
 
 		if (template == 1) { //Garfield Template
 
-			//Displays Question
 			fill(0, 181, 26);
 			text("What is your opinion on Garfield?", 500, 80);
 
-			//Displays Answers
 			text("A: I love Garfield", 500, 200);
 			text("B: I Detest Garfield", 500, 300);
 			text("C: He's whatever", 500, 400);
 			text("D: Who's Garfield?", 500, 500);
 
-		} else if (template == 2) { //Tarot Card Template
+		} else if (template == 2) {
 
-			//Displays Question
 			fill(0, 181, 26);
-			text("What do you think about Tarot Cards?", 500, 80);
 
-			//Displays Answers
+			text("What do you think about Tarot Cards?", 500, 80);
 			textSize(35);
 			text("A: Kind of Useless", 500, 200);
 			text("B: They can be used to reflect", 500, 300);
 			text("C: They can be fun to use", 500, 400);
 			text("D: I wouldn't mess with them", 500, 500);
 
-		} else if (template == 3) { //Rabbit Hole Template
 
-			//Displays Question
+
+		} else if (template == 3) {
+
 			fill(0, 181, 26);
+
 			text("Do you enjoy virtual rabbit holes?", 500, 80);
-			
-			//Displays Answers
 			textSize(35);
 			text("A: Depends on the topic", 500, 200);
 			text("B: Not really", 500, 300);
 			text("C: I can fall in one hours", 500, 400);
 			text("D: No idea", 500, 500);
 
-		} else if (template == 4) { //Minimalist Template
 
-			//Displays Question
-			fill(0, 181, 26);
-			text("Are you enjoying this quiz?", 500, 80);
 			
-			//Displays Answers
+		} else if (template == 4) {
+
+			fill(0, 181, 26);
+
+			text("Are you enjoying this quiz?", 500, 80);
 			textSize(35);
 			text("A: Of course!", 500, 200);
 			text("B: Absolutely", 500, 300);
 			text("C: I'm having a great time", 500, 400);
 			text("D: P.A.G IS THE BEST!!!!!", 500, 500);
 
-		} else if (template == 5) { //Music Genre Template
 
-			//Displays Question
-			fill(0, 181, 26);
-			text("Pick a music genre!", 500, 80);
 			
-			//Displays Answers
+		} else if (template == 5) {
+
+			fill(0, 181, 26);
+
+			text("Pick a music genre!", 500, 80);
 			textSize(35);
 			text("A: House", 500, 200);
 			text("B: Disco", 500, 300);
 			text("C: 80s Music", 500, 400);
 			text("D: Something different", 500, 500);
+			
 		} 
 
 
 
-	} else if (qCounter == 4) { //The User gets to choose the colour of their poster here
+	} else if (qCounter == 4) {
 
-		//Displays Text
 		fill(0, 181, 26);
 		text("Alright, last one!", 500, 80);
 		textSize(25);
 		text("Click on the button thats colour appeals to you the most", 500, 130);
+		 
 		text("If you don't like these colours, click this new button to change them!", 500, 170);
 		text("I can't guarantee that they will be pretty ones...", 500, 210);
-		
-		//Displays colour randomiser button
 		colourButton.display();
 
-		if (template == 3 && choice == 'B') { // if the user responded to the rabbit holes question that they don't enjoy them, the template is changed to a different one
+		if (template == 3 && choice == 'B') {
+
 			template = 4;
+
 		}
+		
+
 	}
+
+
 }
 
-function gamestate2(){ //OUTRO
+function gamestate2(){
 
-	//Displays PAGS sprite
 	pag.resize(300, 500);
 	image(pag, 10, 300);
-
-	//Displays the load poster button in the Users chosen colour
 	finalButton.colour = chosenColour;
 	finalButton.display();
-	
-	//Displays Outro Text
 	fill(0, 181, 26);
 	textSize(30);
 	textAlign(LEFT);
@@ -332,28 +329,28 @@ function gamestate2(){ //OUTRO
 
 }
 
-function gamestate3() { //POSTER GENERATION
+function gamestate3() {
 	
-	//Loads the files needed for the poster depending on the template and the Quiz Results
+
 	if (loadFileDone == false) {
 		loadFiles();
 		loadFileDone = true;
 		console.log("filesloaded");
-		x = randomInteger(0,randomString.length -1); // Chooses the Index for the random string to be used
+		x = randomInteger(0,randomString.length -1);
+		
+		
 	}
 
-	//Variables used to do text repitition in loops
 	var textRepeatSize;
 	var textDownSize;
 	
-	//Canvas is changed to A4 paper size
+	
 	resizeCanvas(2480, 3508);
 	background('white');
 
 
 	if (template == 1) { //Garfield Template
-			
-			//Sizes and places the different sprites
+
 			garfieldStrip.resize(2100, 640);
 			image(garfieldStrip, 200, 700);
 
@@ -366,7 +363,10 @@ function gamestate3() { //POSTER GENERATION
 			textRepeatSize = 120;
 			textDownSize = 1550;
 
-			//Places the random text so that it slowly gets smaller as it reaches the bottom of the page
+			
+
+			
+
 			fill(chosenColour);
 			textAlign(CENTER);
 			textSize(textRepeatSize);
@@ -396,37 +396,39 @@ function gamestate3() { //POSTER GENERATION
 			textSize(textRepeatSize - 80);
 			text(randomString[x], 1240 , textDownSize + 1600);
 
-		} else if (template == 2) { //TAROT CARD TEMPLATE
+			
+
+			
+			
+
+		} else if (template == 2) {
 
 			textDownSize = 1700;
 			textRepeatSize = 110;
+			//chosenColour = color(58,137, 134);
+
 			
-			//Outside Rectangle 
 			rect(0,0, 2480, 3508);
 
-			//White rectangle on the inside to create a frame
 			fill('white');
 			rect(50, 50, 2350, 3400);
 
-			//Space for tarot card made into the frame
 			fill(chosenColour);
 			rect(700, 0, 1000, 1500);
 
-			//Tarot card and other sprites resized and displayed
+
 			tarot.resize(800, 1200);
 			image(tarot, 800, 50);
 
 			qrCode.resize(500, 500);
 			image(qrCode, 125, 100);
 
-			//The TarotQR is a QR code that matches the tarot card given on the poster
 			tarotQR.resize(500, 500);
 			image(tarotQR, 1800,100);
 
 			spotifyCode.resize(900, 200);
 			image(spotifyCode, 750, 1260);
 
-			//a loop for placing the randomt text string
 			for (var i = 8; i >= 0; i--) {
 				fill(chosenColour);
 				textAlign(CENTER);
@@ -435,16 +437,16 @@ function gamestate3() { //POSTER GENERATION
 				textDownSize = textDownSize + 200;
 			}
 
-			//Resets textDownSize before the next loop
 			textDownSize = 1800;
 
-		} else if (template == 3) { //RABBIT HOLE TEMPLATE
 
-			//Sizes and palces the background art
+
+		} else if (template == 3) {
+
+
 			bg.resize(2500, 3528);
 			image(bg, 0,0);
 
-			//Displays and resizes the codes
 			qrCode.resize(800,800);
 			image(qrCode, 850, 1650);
 
@@ -453,13 +455,19 @@ function gamestate3() { //POSTER GENERATION
 
 			spotifyCode.resize(1300, 300);
 			image(spotifyCode, 600, 165);	
+
+
+
 			
-		} else if (template == 4) { //MINIMALIST TEMPLATE
+		} else if (template == 4) {
+
+
 
 			//draws circles
 			fill(chosenColour);
 			circle(-100,2700, 1800);
 			circle(2580, 700, 1800);
+
 
 			tint(chosenColour); // tints the spotify code to the users chosen colour
 
@@ -477,139 +485,128 @@ function gamestate3() { //POSTER GENERATION
 			textSize(115);
 			textAlign(CENTER);
 			text(randomString[x], 1240, 1700);
-			//reverts the tint
+
 			tint(290, 0);
 
-		} else if (template == 5) { //MUSIC GENRE TEMPLATE
+			
+		} else if (template == 5) {
 
-			//Loads the Background, changes depending on the Users genre choice
+			
 			image(bg, 0,0);
 
-			//tints the spotify code to the users chosen colour
 			tint(chosenColour);
 			spotifyCode.resize(1700, 400);
 			image(spotifyCode, 780, 1790);
 
 			tint(290,300);
 
-			//if the user choose the genre 'something different' a special QR code is also added
 			if (choice == 'D') {
 				qrCode.resize(790, 830);
 				image(qrCode, 1340, 400);
 			}
 }
 
-function loadFiles() { //Loads the files needed for the poster
+function loadFiles() {
 
 	if (template == 1) { //Garfield Template
 
-		garfieldSelector = 'Sprites/garfield (' + randomInteger(1,11) + ').jpg'; //Creates a random garfield comic filepath
-		garfieldStrip = loadImage(garfieldSelector); //loads the selected comic
+		garfieldSelector = 'Sprites/garfield (' + randomInteger(1,11) + ').jpg';
+
+		garfieldStrip = loadImage(garfieldSelector);
 		
-		spotifySelector = 'Sprites/spotify (' + randomInteger(1,85) + ').jpeg'; //Creates a random spotify code filepath
-		spotifyCode = loadImage(spotifySelector); //loads the selected song
 
-		//In the garfield template, all users are given the same Garfield QR code
-		qrCode = loadImage('Sprites/garfieldQR.png'); //loads the garfield QR code
+		spotifySelector = 'Sprites/spotify (' + randomInteger(1,85) + ').jpeg';
+		spotifyCode = loadImage(spotifySelector);
 
-		} else if (template == 2) { //Tarot Card Template
+		//qrSelector = 'Sprites/qrcode (' + randomInteger(1,28) + ').png';
+		qrCode = loadImage('Sprites/garfieldQR.png');
 
-			var c = randomInteger(1,10); //Random Number to decide the tarot card
+		} else if (template == 2) {
 
-			//Tarot card is selected using the random number
-			tarotSelector = 'Sprites/tarot (' + c + ').png'; //Creates a random tarot card filepath
-			tarot = loadImage(tarotSelector); //Loads the tarot card
+			var c = randomInteger(1,10);
 
-			spotifySelector = 'Sprites/spotify (' + randomInteger(1,85) + ').jpeg'; //Creates a random spotify code filepath
-			spotifyCode = loadImage(spotifySelector); //loads the selected song
+			tarotSelector = 'Sprites/tarot (' + c + ').png';
+			tarot = loadImage(tarotSelector);
 
-			//This QR code uses a special set of QR codes that are associated with each card
-			//The random number that was used for the tarot card is used here to get the QR code that matches that card
+			spotifySelector = 'Sprites/spotify (' + randomInteger(1,85) + ').jpeg';
+			spotifyCode = loadImage(spotifySelector);
+
+
 			qrSelector = 'Sprites/qr-code (' + c + ').png';
 			tarotQR = loadImage(qrSelector);
 
-			//Random QR code generated
-			qrSelector = 'Sprites/qrcode (' + randomInteger(1,28) + ').png'; //Creates random QR code filepath
-			qrCode = loadImage(qrSelector); //Loads QR code
+			qrSelector = 'Sprites/qrcode (' + randomInteger(1,28) + ').png';
+			qrCode = loadImage(qrSelector);
 
-		} else if (template == 3) { //RABBIT HOLE TEMPLATE
+		} else if (template == 3) {
+
+			spotifySelector = 'Sprites/spotify (' + randomInteger(1,85) + ').jpeg';
+			spotifyCode = loadImage(spotifySelector);
+
+			qrSelector = 'Sprites/qrcode (' + randomInteger(1,28) + ').png';
+			qrCode = loadImage(qrSelector);
+
+			bgSelector = 'Sprites/spiral (' + randomInteger(1,8) + ').jpg';
+			bg = loadImage(bgSelector);
 
 
-			spotifySelector = 'Sprites/spotify (' + randomInteger(1,85) + ').jpeg'; //Creates a random spotify code filepath
-			spotifyCode = loadImage(spotifySelector); //loads the selected song
-
-			qrSelector = 'Sprites/qrcode (' + randomInteger(1,28) + ').png'; //Creates random QR code filepath
-			qrCode = loadImage(qrSelector); //Loads QR code
-
-
-			bgSelector = 'Sprites/spiral (' + randomInteger(1,8) + ').jpg'; //creates a filepath for a random colour variation of the Spiral Art
-			bg = loadImage(bgSelector); //Loads the Art
 			
-		} else if (template == 4) { //MINIMALIST TEMPLATE
+		} else if (template == 4) {
 
-			spotifySelector = 'Sprites/spotify (' + randomInteger(1,85) + ').jpeg';  //Creates a random spotify code filepath
-			spotifyCode = loadImage(spotifySelector); //loads the selected song
+			spotifySelector = 'Sprites/spotify (' + randomInteger(1,85) + ').jpeg';
+			spotifyCode = loadImage(spotifySelector);
 
-			qrSelector = 'Sprites/qrcode (' + randomInteger(1,28) + ').png'; //Creates random QR code filepath
-			qrCode = loadImage(qrSelector); //Loads QR code
+			qrSelector = 'Sprites/qrcode (' + randomInteger(1,28) + ').png';
+			qrCode = loadImage(qrSelector);
 
-			//Loads Paper texture
 			bgSelector	= 'Sprites/paperTexture.jpg';
 			bg = loadImage(bgSelector);
-			
-		} else if (template == 5) { //MUSIC GENRE TEMPLATE
 
-			if(choice == 'A') { //Loads the House Music Variation if the user picked it
-				//Loads the associated background
+
+			
+		} else if (template == 5) {
+
+			if(choice == 'A') {
 				bgSelector = 'Sprites/house.jpg';
 				bg = loadImage(bgSelector);
 
-				//Creates a song code for that genre
 				spotifySelector = 'Sprites/houseSong.jpeg';
 				spotifyCode = loadImage(spotifySelector);
 
-			} else if(choice == 'B') { //Loads the Disco Music Variation if the user picked it
-				//Loads the associated background
+			} else if(choice == 'B') {
 				bgSelector = 'Sprites/disco.jpg';
 				bg = loadImage(bgSelector);
 
-				//Creates a song code for that genre
 				spotifySelector = 'Sprites/discoSong.jpeg';
 				spotifyCode = loadImage(spotifySelector);
 
-			} else if(choice == 'C') { //Loads the 80's Music Variation if the user picked it
-				//Loads the associated background
+			} else if(choice == 'C') {
 				bgSelector = 'Sprites/80.jpg';
 				bg = loadImage(bgSelector);
 
-				//Creates a song code for that genre
 				spotifySelector = 'Sprites/80song.jpeg';
 				spotifyCode = loadImage(spotifySelector);
 
-			} else if(choice == 'D') { //Loads the Different Music Variation if the user picked it
-				//Loads the associated background
+			} else if(choice == 'D') {
 				bgSelector = 'Sprites/different.jpg';
 				bg = loadImage(bgSelector);
 
-				//Creates a song code for that genre
 				spotifySelector = 'Sprites/differentSong.jpeg';
 				spotifyCode = loadImage(spotifySelector);
 
-				//Creates a QR code 
 				qrSelector = 'Sprites/differentQR.png';
 				qrCode = loadImage(qrSelector);
+
 			}
 		}
 	}
 
 }
 
-//Function used the create a random number inbetween a range of numbers
 function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//Function sourced from stack overflow that generates a specified amount of unique random numbers between a range of numbers
 function uniqueRandoms(qty, min, max){
   var rnd, arr=[];
   do { do { rnd=Math.floor(Math.random()*max)+min }
@@ -619,9 +616,8 @@ function uniqueRandoms(qty, min, max){
   return arr;
 }
 
-function loadArrays(){ //Function used to populate arrays
+function loadArrays(){
 
-//Question Array
 questionList = 
 [
 ["How was your day?", "A: It's been great!","B: Could be better", "C: Could be worse", "D: Not very good"],
@@ -638,7 +634,6 @@ questionList =
 ["Where did House music originate?" , "A: New York", "B: Chicago" , "C: Oregon", "D: California"],
 ];
 
-//Random Poster Text Array
 randomString = 
 [
 	"Groove is in the Heart",
