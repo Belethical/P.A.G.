@@ -127,7 +127,7 @@ function gamestate0() { // INTRO
 	fill(0, 181, 26);
 	textSize(20);
 	textAlign(LEFT);
-	text('STARTING PROGRAM...', 1, 20);
+	text('STARTING CUNTY PROGRAM...', 1, 20);
 	text('FETCHING SPRITES...', 1, 50);
 	text('TURNING P.A.G ON...', 1, 80);
 	text('INJECTING CREATIVITY...', 1, 110);
