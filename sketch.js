@@ -624,7 +624,7 @@ questionList =
 ["Are you a Dog or a Cat person?", "A: Dogs reign supreme", "B: Cats reign supreme", "C: They both suck", "D: It's a tie"],
 ["What is your favourite season?", "A: Summer", "B: Winter", "C: Autumn" , "D: Spring"],
 ["Do you enjoy engaging with art?", "A: Not really", "B: Of Course!" , "C: Depends on the Art" , "D: Art is stupid"],
-["What do you think about house music?",  "A: It slaps", "B: Its Okay","C: I hate it", "D: Depends on my mood"],
+["What do you think about house music?",  "A: It slaps", "B: It's Okay","C: I hate it", "D: Depends on my mood"],
 ["Do you believe in Horoscopes?",  "A: Not at all", "B: Somewhat","C: Quite Strongly", "D: I find them entertaining"],
 ["How would you describe yourself?",  "A: Smart", "B: Charismatic","C: Creative", "D: Rebellious "],
 ["Is your glass half empty or half full?",  "A: half empty", "B: half full","C: my cup runneth over", "D: my cup needs a refill"],
@@ -632,6 +632,11 @@ questionList =
 ["Do you enjoy horror movies?" , "A: Not really", "B: All the time" , "C: Rarely", "D: Maybe at Halloween"],
 ["Do you like the moon?" , "A: It's pretty", "B: I prefer the sun" , "C: Not really", "D: I love the moon"],
 ["Where did House music originate?" , "A: New York", "B: Chicago" , "C: Oregon", "D: California"],
+["Do you feel fufilled?", "A: I'd say so", "B: One day I will" , "C: Not yet", "D: I'm not sure"],
+["What kind of music do you enjoy?", "A: Pop Music", "B: Electronic Music", "C: Classical Music", "D: Something else"],
+["Do you consider yourself an Artist?", "A: I do", "B: I don't" , "C: I'm not sure" , "D: I would like to"],
+["Are you a good listener?", "A: Yes" ,"B: No" , "C: I don't know" , "D: I try my best"],
+["Are you afraid of dying?", "A: Yes", "B: No" , " "]
 ];
 
 randomString = 
@@ -664,7 +669,13 @@ randomString =
 	"how long is forever?",
 	"Trust your senses",
 	"Awaken your Hidden Power",
-	"drowning in moonlight"
+	"drowning in moonlight",
+	"trust your instincts",
+	"isn't the moon beautiful?",
+	"even the stars have scars",
+	"how would it feel to hold a star?",
+	"00111100 00110011",
+	""
 ];
 
 }
