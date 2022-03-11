@@ -14,6 +14,7 @@ let spotifyCode;
 let randomString = [];
 let x;
 let choice;
+var saveFlag = 0;
 //var computerFont;
 
 var garfieldStrip;
@@ -36,6 +37,10 @@ let artStart = false;
 
 let chosenColour = (58,137,134);
 
+var zoom = 1.00;
+var zMin = 0.05;
+var zMax = 9.00;
+var sensativity = 0.005;
 
 
 
@@ -55,8 +60,8 @@ function setup() { //Runs Once at the start of the Webpage
   let green = color(0, 181, 26);
 
 
-  beginButton = new qButton(550, 40, g, 'Click to Start!');
-  finalButton = new qButton(550, 20, g, 'Load Poster');
+  beginButton = new qButton(1, 700, green, 'Click to Start!');
+  finalButton = new qButton(20, 600, g, 'Load Poster');
   colourButton = new qButton(260, 500, green, 'Randomise Colours');
   rgbButton = new qButton(260, 410, green, 'Submit RGB Values');
 
@@ -132,6 +137,7 @@ if (gamestate == 0) {
 function gamestate0() {
 	
 
+
 	fill(0, 181, 26);
 	textSize(20);
 	textAlign(LEFT);
@@ -144,19 +150,19 @@ function gamestate0() {
 	fill(0, 181, 26);
 	textSize(23);
 	textAlign(LEFT);
-	text("Hello, you can call me P.A.G!", 320, 350);
-	text("P.A.G = Personalised Art Generator", 320, 400);
-	text("I'm an AI that specialises in making custom Art", 320, 450);
-	text("My Job is to generate art tailored just for you!", 320, 500);
-	text("Each Poster I make is one of a kind", 320, 550);
-	text("I love making mixtapes as well but thats off topic...", 320, 600);
-	text("I'll ask you some questions to get to know you", 320, 650);
-	text("Then i'll be ready to make you a personalised poster", 320, 700);
-	text("When you're ready click the button to start!", 320, 750);
+	text("Hello, you can call me P.A.G!", 1, 250);
+	text("P.A.G = Personalised Art Generator", 1, 300);
+	text("I'm an AI that specialises in making custom Art", 1, 350);
+	text("My Job is to generate art tailored just for you!", 1, 400);
+	text("Each Poster I make is one of a kind", 1, 450);
+	text("I love making mixtapes as well but thats off topic...", 1, 500);
+	text("I'll ask you some questions to get to know you", 1, 550);
+	text("Then i'll be ready to make you a personalised poster", 1, 600);
+	text("When you're ready click the button to start!", 1, 650);
 
 
 
-	image(pag, 10, 300);
+	image(pag, 620, 100);
 	pag.resize(300, 500);
 
 	//rect(150, 600, 500, 100);
@@ -313,23 +319,8 @@ function gamestate1(){
 		text("If you don't like these colours, click this new button to change them!", 500, 170);
 		text("I can't guarantee that they will be pretty ones...", 500, 210);
 
-		
-		/*
-		input1 = createInput();
-        input1.position(390, 260);
-        text("R", 380, 279); 
-
-        input2 = createInput();
-        input2.position(390, 310);
-       	text("G", 380, 329);
-
-        input3 = createInput();
-        input3.position(390, 360);
-        text("B", 380, 379); 
-        */
-
         colourButton.display();
-		rgbButton.display(); 
+		 
 		
 
 		if (template == 3 && choice == 'B') {
@@ -337,11 +328,7 @@ function gamestate1(){
 			template = 4;
 
 		}
-
-
 	} 
-
-
 }
 
 
@@ -349,23 +336,23 @@ function gamestate2(){
 
 	//input3.hide;
 	pag.resize(300, 500);
-	image(pag, 10, 300);
+	image(pag, 650, 100);
 	finalButton.colour = chosenColour;
 	finalButton.display();
 	fill(0, 181, 26);
-	textSize(30);
+	textSize(24);
 
 	textAlign(LEFT);
-	text("Thanks for answering my questions!", 320, 350);
-	text("Based on your personality profile", 320, 400);
-	text("I've made you a poster you can print out!", 320, 450);
-	text("It's got stuff I picked just for you!", 320, 500);
-	text("I'm still learning how to do this...", 320, 550);
-	text("But I think you'll love it (｡◕‿◕｡)", 320, 600);
-	text("You can save the poster on the next page", 320, 650);
-	text("Don't forget to scan the codes!", 320, 700);
-	textSize(18);
-	text("P.S you might have to zoom out your browser to see it all, sorry!!", 320, 730);
+	text("Thanks for answering my questions!", 20, 120);
+	text("based on your personality profile", 20, 170);
+	text("I've made you a poster you can print out!", 20, 220);
+	text("It's got stuff I picked just for you!", 20, 270);
+	text("But I think you'll love it (｡◕‿◕｡)", 20, 320);
+	text("Press 'S' to save the Poster!", 20, 370);
+	text("Alternatively you can right click the canvas", 20, 420);
+	text("Don't forget to scan the codes!", 20, 470);
+	text("you might have to zoom out your browser to see it all", 20, 520);
+	text("I'm still waiting on the maintenence team to fix that!", 20, 570);
 
 
 } 
@@ -377,14 +364,11 @@ function gamestate3() {
 		loadFiles();
 		loadFileDone = true;
 		console.log("filesloaded");
-		x = randomInteger(0,randomString.length -1);
-		
-		
+		x = randomInteger(0,randomString.length -1);	
 	}
 
 	var textRepeatSize;
 	var textDownSize;
-	
 	
 	resizeCanvas(2480, 3508);
 	background('white');
@@ -403,10 +387,6 @@ function gamestate3() {
 
 			textRepeatSize = 120;
 			textDownSize = 1550;
-
-			
-
-			
 
 			fill(chosenColour);
 			textAlign(CENTER);
@@ -436,11 +416,6 @@ function gamestate3() {
 
 			textSize(textRepeatSize - 80);
 			text(randomString[x], 1240 , textDownSize + 1600);
-
-			
-
-			
-			
 
 		} else if (template == 2) {
 
@@ -548,6 +523,7 @@ function gamestate3() {
 
 } else if (template== 6) {
 
+
 	textRepeatSize = 120;
 	textDownSize = 1450;
 
@@ -556,8 +532,6 @@ function gamestate3() {
 	textSize(115);
 	fill(chosenColour);
 	
-	spotifyCode.resize(1400, 350);
-	image(spotifyCode, 550, 3050);
 
 	qrCode.resize(450,450);
 	image(qrCode, 100, 450);
@@ -568,37 +542,26 @@ function gamestate3() {
 	
 	text(randomString[x], 1240 , textDownSize);
 
-	
 	text(randomString[x], 1240 , textDownSize + 200);
 
-	
 	text(randomString[x], 1240 , textDownSize + 400);
-
 
 	text(randomString[x], 1240 , textDownSize + 600);
 
 	text(randomString[x], 1240 , textDownSize + 800);
 
-
 	text(randomString[x], 1240 , textDownSize + 1000);
 
 	text(randomString[x], 1240 , textDownSize + 1200);
 
-	
 	text(randomString[x], 1240 , textDownSize + 1400);
 
-	
 	tint(chosenColour);
-	qrCode.resize(450,450);
-	image(qrCode, 100, 450);
 
-	qrCode2.resize(450,450);
-	image(qrCode2, 1950, 450 );
+	spotifyCode.resize(1400, 350);
+	image(spotifyCode, 550, 3050);
 
 	
-
-
-
 }
 
 
@@ -696,6 +659,8 @@ function loadFiles() {
 			}
 		} else if (template == 6) { // Moon Template File Loading
 
+
+
 			spotifySelector = 'Sprites/moonSong.jpeg';
 			spotifyCode = loadImage(spotifySelector);
 
@@ -705,9 +670,24 @@ function loadFiles() {
 			qrSelector2 = 'Sprites/qrcode (' + randomInteger(1,28) + ').png';
 			qrCode2 = loadImage(qrSelector2);
 
+		
+
 		}
 	}
 
+}
+
+function mouseWheel(event) {
+  zoom += sensativity * event.delta;
+  zoom = constrain(zoom, zMin, zMax);
+  //uncomment to block page scrolling
+  return false;
+}
+
+function keyPressed(){
+	if(key == 's' && gamestate == 3) {
+		save(randomString[x] + '.png');
+	}
 }
 
 function randomInteger(min, max) {
