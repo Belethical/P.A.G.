@@ -1,7 +1,7 @@
 //Global Variables
 
 let gamestate = 0;
-let template;
+let template = 6;
 var pag;
 let qButtons = [];
 let questionList = [];
@@ -23,7 +23,9 @@ var bgSelector;
 var bg;
 
 var qrCode;
+var qrCode2;
 var qrSelector;
+var qrSelector2;
 
 var tarot;
 var tarotSelector;
@@ -36,9 +38,14 @@ let chosenColour = (58,137,134);
 
 
 
-function setup() {
-  createCanvas(1000, 800);
+
+
+function setup() { //Runs Once at the start of the Webpage
+  var canvas = createCanvas(1000, 800);
+   
+ 
   pag = loadImage('Sprites/PAG.png');
+  moon = loadImage('Sprites/moon.png');
   textFont('Syne Mono');
 	 
   let p = color(199,36, 177);
@@ -50,11 +57,12 @@ function setup() {
 
   beginButton = new qButton(550, 40, g, 'Click to Start!');
   finalButton = new qButton(550, 20, g, 'Load Poster');
-  colourButton = new qButton(300, 240, green, 'Change Colours');
+  colourButton = new qButton(260, 500, green, 'Randomise Colours');
+  rgbButton = new qButton(260, 410, green, 'Submit RGB Values');
 
   loadArrays();
 
-  rQuestions = uniqueRandoms(3, 0, 11);
+  rQuestions = uniqueRandoms(3, 0, 11 );
 
   for (var i = 0; i <= 2; i++) {	
   	sQuestions[i] = questionList[rQuestions[i]];
@@ -65,7 +73,7 @@ function setup() {
   qButtons[2] = new qButton(500,600, b, 'B');
   qButtons[3] = new qButton(500,700, r, 'D');
   
-  template = randomInteger(1,5);
+  //template = randomInteger(1,5);
 
 }
 
@@ -117,6 +125,9 @@ if (gamestate == 0) {
 } 
 
 }
+
+
+
 
 function gamestate0() {
 	
@@ -278,7 +289,17 @@ function gamestate1(){
 			text("C: 80s Music", 500, 400);
 			text("D: Something different", 500, 500);
 			
-		} 
+		} else if (template == 6) {
+
+			fill(0, 181, 26);
+
+			text("What do you think of the Moon?", 500, 80);
+			textSize(35);
+			text("A: Not Much", 500, 200);
+			text("B: It's Beautiful", 500, 300);
+			text("C: The stars are better", 500, 400);
+			text("D: It seems lonely", 500, 500);
+		}
 
 
 
@@ -291,28 +312,49 @@ function gamestate1(){
 		 
 		text("If you don't like these colours, click this new button to change them!", 500, 170);
 		text("I can't guarantee that they will be pretty ones...", 500, 210);
-		colourButton.display();
+
+		
+		/*
+		input1 = createInput();
+        input1.position(390, 260);
+        text("R", 380, 279); 
+
+        input2 = createInput();
+        input2.position(390, 310);
+       	text("G", 380, 329);
+
+        input3 = createInput();
+        input3.position(390, 360);
+        text("B", 380, 379); 
+        */
+
+        colourButton.display();
+		rgbButton.display(); 
+		
 
 		if (template == 3 && choice == 'B') {
 
 			template = 4;
 
 		}
-		
 
-	}
+
+	} 
 
 
 }
 
+
 function gamestate2(){
 
+	//input3.hide;
 	pag.resize(300, 500);
 	image(pag, 10, 300);
 	finalButton.colour = chosenColour;
 	finalButton.display();
 	fill(0, 181, 26);
 	textSize(30);
+
 	textAlign(LEFT);
 	text("Thanks for answering my questions!", 320, 350);
 	text("Based on your personality profile", 320, 400);
@@ -323,11 +365,10 @@ function gamestate2(){
 	text("You can save the poster on the next page", 320, 650);
 	text("Don't forget to scan the codes!", 320, 700);
 	textSize(18);
-	text("P.S you might have to zoom out your browser to see it all, sorry!!!", 320, 730);
+	text("P.S you might have to zoom out your browser to see it all, sorry!!", 320, 730);
 
 
-
-}
+} 
 
 function gamestate3() {
 	
@@ -351,13 +392,13 @@ function gamestate3() {
 
 	if (template == 1) { //Garfield Template
 
-			garfieldStrip.resize(2100, 640);
+			garfieldStrip.resize(2100, 640); // loads and places the selected garfield strip
 			image(garfieldStrip, 200, 700);
 
-			spotifyCode.resize(2480, 600);
+			spotifyCode.resize(2480, 600); // loads and places the selected spotify code
 			image(spotifyCode, 0,0);
 
-			qrCode.resize(705, 705);
+			qrCode.resize(705, 705); // loads and places the selected 
 			image(qrCode, 895, 670);
 
 			textRepeatSize = 120;
@@ -417,16 +458,16 @@ function gamestate3() {
 			rect(700, 0, 1000, 1500);
 
 
-			tarot.resize(800, 1200);
+			tarot.resize(800, 1200); // loads and places the selected tarot card
 			image(tarot, 800, 50);
 
-			qrCode.resize(500, 500);
+			qrCode.resize(500, 500); // loads and places the selected QR Code
 			image(qrCode, 125, 100);
 
-			tarotQR.resize(500, 500);
+			tarotQR.resize(500, 500); // loads and places the selected tarot explanation QR code
 			image(tarotQR, 1800,100);
 
-			spotifyCode.resize(900, 200);
+			spotifyCode.resize(900, 200); // loads and places the selected
 			image(spotifyCode, 750, 1260);
 
 			for (var i = 8; i >= 0; i--) {
@@ -444,16 +485,16 @@ function gamestate3() {
 		} else if (template == 3) {
 
 
-			bg.resize(2500, 3528);
+			bg.resize(2500, 3528); //Scales the selected background
 			image(bg, 0,0);
 
-			qrCode.resize(800,800);
+			qrCode.resize(800,800); // loads and places the selected QR code
 			image(qrCode, 850, 1650);
 
-			fill(chosenColour);
+			fill(chosenColour); // creates rectangle from chosen colour
 			rect(550, 120,  1400, 400);
 
-			spotifyCode.resize(1300, 300);
+			spotifyCode.resize(1300, 300); // loads and places the selected spotify code
 			image(spotifyCode, 600, 165);	
 
 
@@ -463,7 +504,7 @@ function gamestate3() {
 
 
 
-			//draws circles
+			//draws circles in chosen colour
 			fill(chosenColour);
 			circle(-100,2700, 1800);
 			circle(2580, 700, 1800);
@@ -492,7 +533,7 @@ function gamestate3() {
 		} else if (template == 5) {
 
 			
-			image(bg, 0,0);
+			image(bg, 0,0); //Places Background
 
 			tint(chosenColour);
 			spotifyCode.resize(1700, 400);
@@ -504,7 +545,62 @@ function gamestate3() {
 				qrCode.resize(790, 830);
 				image(qrCode, 1340, 400);
 			}
+
+} else if (template== 6) {
+
+	textRepeatSize = 120;
+	textDownSize = 1450;
+
+	image(moon, 675,100);
+	textAlign(CENTER);
+	textSize(115);
+	fill(chosenColour);
+	
+	spotifyCode.resize(1400, 350);
+	image(spotifyCode, 550, 3050);
+
+	qrCode.resize(450,450);
+	image(qrCode, 100, 450);
+
+	qrCode2.resize(450,450);
+	image(qrCode2, 1950, 450 );
+
+	
+	text(randomString[x], 1240 , textDownSize);
+
+	
+	text(randomString[x], 1240 , textDownSize + 200);
+
+	
+	text(randomString[x], 1240 , textDownSize + 400);
+
+
+	text(randomString[x], 1240 , textDownSize + 600);
+
+	text(randomString[x], 1240 , textDownSize + 800);
+
+
+	text(randomString[x], 1240 , textDownSize + 1000);
+
+	text(randomString[x], 1240 , textDownSize + 1200);
+
+	
+	text(randomString[x], 1240 , textDownSize + 1400);
+
+	
+	tint(chosenColour);
+	qrCode.resize(450,450);
+	image(qrCode, 100, 450);
+
+	qrCode2.resize(450,450);
+	image(qrCode2, 1950, 450 );
+
+	
+
+
+
 }
+
 
 function loadFiles() {
 
@@ -598,6 +694,17 @@ function loadFiles() {
 				qrCode = loadImage(qrSelector);
 
 			}
+		} else if (template == 6) { // Moon Template File Loading
+
+			spotifySelector = 'Sprites/moonSong.jpeg';
+			spotifyCode = loadImage(spotifySelector);
+
+			qrSelector = 'Sprites/qrcode (' + randomInteger(1,28) + ').png';
+			qrCode = loadImage(qrSelector);
+
+			qrSelector2 = 'Sprites/qrcode (' + randomInteger(1,28) + ').png';
+			qrCode2 = loadImage(qrSelector2);
+
 		}
 	}
 

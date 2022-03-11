@@ -29,6 +29,7 @@ class qButton {
 				if (qCounter == 4) { //If the question is the colour one, the colour is taken and the gamestate moved on
 					chosenColour = this.colour;
 					gamestate = 2;
+
 				}
 
 				if(qCounter == 3){ //Records the Question that was picked on question 3, it can be A, B, C, or D
