@@ -1,7 +1,7 @@
 //Global Variables
 
 let gamestate = 0;
-let template = 6;
+let template= 0;
 var pag;
 let qButtons = [];
 let questionList = [];
@@ -49,7 +49,7 @@ function setup() { //Runs Once at the start of the Webpage
   var canvas = createCanvas(1000, 800);
    
  
-  pag = loadImage('Sprites/PAG.png');
+  pag = loadImage('Sprites/newPag.png');
   moon = loadImage('Sprites/moon.png');
   textFont('Syne Mono');
 	 
@@ -61,7 +61,7 @@ function setup() { //Runs Once at the start of the Webpage
 
 
   beginButton = new qButton(1, 700, green, 'Click to Start!');
-  finalButton = new qButton(20, 600, g, 'Load Poster');
+  finalButton = new qButton(20, 10, g, 'Load Poster');
   colourButton = new qButton(260, 500, green, 'Randomise Colours');
   rgbButton = new qButton(260, 410, green, 'Submit RGB Values');
 
@@ -78,7 +78,7 @@ function setup() { //Runs Once at the start of the Webpage
   qButtons[2] = new qButton(500,600, b, 'B');
   qButtons[3] = new qButton(500,700, r, 'D');
   
-  //template = randomInteger(1,5);
+  template = randomInteger(1,6);
 
 }
 
@@ -162,8 +162,8 @@ function gamestate0() {
 
 
 
-	image(pag, 620, 100);
-	pag.resize(300, 500);
+	image(pag, 630, 70);
+	pag.resize(330, 500);
 
 	//rect(150, 600, 500, 100);
 	beginButton.display();
@@ -335,24 +335,24 @@ function gamestate1(){
 function gamestate2(){
 
 	//input3.hide;
-	pag.resize(300, 500);
-	image(pag, 650, 100);
+	pag.resize(330, 500);
+	image(pag, 660, 80);
 	finalButton.colour = chosenColour;
 	finalButton.display();
 	fill(0, 181, 26);
 	textSize(24);
 
 	textAlign(LEFT);
-	text("Thanks for answering my questions!", 20, 120);
-	text("based on your personality profile", 20, 170);
-	text("I've made you a poster you can print out!", 20, 220);
-	text("It's got stuff I picked just for you!", 20, 270);
-	text("But I think you'll love it (｡◕‿◕｡)", 20, 320);
-	text("Press 'S' to save the Poster!", 20, 370);
-	text("Alternatively you can right click the canvas", 20, 420);
-	text("Don't forget to scan the codes!", 20, 470);
-	text("you might have to zoom out your browser to see it all", 20, 520);
-	text("I'm still waiting on the maintenence team to fix that!", 20, 570);
+	text("Thanks for answering my questions!", 20, 150);
+	text("based on your personality profile", 20, 200);
+	text("I've made you a poster you can print out!", 20, 250);
+	text("It's got stuff I picked just for you!", 20, 300);
+	text("But I think you'll love it (｡◕‿◕｡)", 20, 350);
+	text("Press 'S' to save the Poster!", 20, 400);
+	text("Alternatively you can right click the canvas", 20, 450);
+	text("Don't forget to scan the codes!", 20, 500);
+	text("you might have to zoom out your browser to see it all", 20, 550);
+	text("I'm still waiting on the maintenence team to fix that!", 20, 600);
 
 
 } 
@@ -723,7 +723,7 @@ questionList =
 ["What kind of music do you enjoy?", "A: Pop Music", "B: Electronic Music", "C: Classical Music", "D: Something else"],
 ["Do you consider yourself an Artist?", "A: I do", "B: I don't" , "C: I'm not sure" , "D: I would like to"],
 ["Are you a good listener?", "A: Yes" ,"B: No" , "C: I don't know" , "D: I try my best"],
-["Are you afraid of dying?", "A: Yes", "B: No" , " "]
+["Are you afraid of dying?", "A: Yes", "B: No" , "C: I'm not sure" , "D: Death fears"]
 ];
 
 randomString = 
